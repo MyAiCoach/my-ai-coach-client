@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import Cookies from "js-cookie";
 
 export class HttpClientService {
   baseUrl: string = "https://localhost:7216/api/";
@@ -9,18 +10,55 @@ export class HttpClientService {
     }${requestParameters.action || ""}${requestParameters.queryString || ""}`;
   }
 
-  async getByIdAsync<T>(
+  async getByIdAsyncWithToken<T>(
     requestParameters: Partial<RequestParameters>
   ): Promise<T> {
-    let url: string = "";
+    const token = Cookies.get("token")?.valueOf();
+    const headers = { Authorization: `Bearer ${token}` };
 
-    if (requestParameters.fullEndPoint) url = requestParameters.fullEndPoint;
-    else {
+    let url: string = "";
+    if (requestParameters.fullEndPoint) {
+      url = requestParameters.fullEndPoint;
+    } else {
       url = this.url(requestParameters);
     }
 
-    const response: AxiosResponse<T> = await axios.get<T>(url);
+    const response: AxiosResponse<T> = await axios.get<T>(url, { headers });
+    return response.data;
+  }
 
+  async postAsyncWithToken<T>(
+    requestParameters: Partial<RequestParameters>,
+    data: any
+  ): Promise<T> {
+    const token = Cookies.get("token")?.valueOf();
+    const headers = { Authorization: `Bearer ${token}` };
+
+    let url: string = "";
+    if (requestParameters.fullEndPoint) {
+      url = requestParameters.fullEndPoint;
+    } else {
+      url = this.url(requestParameters);
+    }
+
+    const response: AxiosResponse<T> = await axios.post<T>(url, data, {
+      headers,
+    });
+    return response.data;
+  }
+
+  async postAsync<T>(
+    requestParameters: Partial<RequestParameters>,
+    data: any
+  ): Promise<T> {
+    let url: string = "";
+    if (requestParameters.fullEndPoint) {
+      url = requestParameters.fullEndPoint;
+    } else {
+      url = this.url(requestParameters);
+    }
+
+    const response: AxiosResponse<T> = await axios.post<T>(url, data);
     return response.data;
   }
 }

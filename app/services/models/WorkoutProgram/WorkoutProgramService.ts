@@ -6,7 +6,7 @@ export default class WorkoutProgramService extends BaseService {
     id: string
   ): Promise<ProgramViewDto> {
     const promiseData: ProgramViewDto =
-      await this.httpClientServices.getByIdAsync({
+      await this.httpClientServices.getByIdAsyncWithToken({
         controller: "userexercise",
         queryString: `?id=${id}`,
       });
