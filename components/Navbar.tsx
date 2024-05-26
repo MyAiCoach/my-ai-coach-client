@@ -16,7 +16,7 @@ const Navbar = (props: Props) => {
         <Navigate />
       </div>
 
-      <div className="hidden lg:space-x-1 lg:flex">
+      <div className={`hidden lg:space-x-1 lg:flex `}>
         <Link href={"/auth/login"}>
           <Button variant={"link"}>Login</Button>
         </Link>
