@@ -10,7 +10,7 @@ type Props = {};
 
 const Navbar = (props: Props) => {
   return (
-    <nav className="flex justify-between items-center border-secondary border-b-[1px] lg:py-2 lg:px-72 px-9 py-4">
+    <nav className="fixed z-10 w-screen flex justify-between items-center backdrop-blur-sm  border-secondary lg:py-4 lg:px-72 px-9 py-6">
       <div className="flex space-x-5 items-center">
         <Logo />
         <Navigate />
@@ -21,7 +21,7 @@ const Navbar = (props: Props) => {
           <Button variant={"link"}>Login</Button>
         </Link>
         <Link href={"/auth/register"}>
-          <Button variant={"secondary"}>Register</Button>
+          <Button variant={"outline"}>Register</Button>
         </Link>
         <ModeToggle />
       </div>
