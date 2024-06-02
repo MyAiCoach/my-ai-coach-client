@@ -17,16 +17,14 @@ const Navbar = async (props: Props) => {
     >
       <div className="flex space-x-5 items-center">
         <Logo />
-        <Navigate />
+        <Navigate user={user} />
       </div>
 
       <div className={`hidden lg:space-x-1 lg:flex lg:items-center`}>
         {user ? (
           <>
             <Link href={"/profile"}>
-              <Link href={"/profile"}>
-                <Button variant={"link"}>{user.sub}</Button>
-              </Link>
+              <Button variant={"link"}>{user.sub}</Button>
             </Link>
             <Link href={"/auth/logout"}>
               <Button variant={"outline"}>Logout</Button>
