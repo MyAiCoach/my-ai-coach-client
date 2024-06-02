@@ -1,12 +1,13 @@
+import Link from "next/link";
 import React from "react";
 
 type Props = {};
 
 const Logo = (props: Props) => {
   return (
-    <span className="">
+    <Link href={"/"}>
       MY<span className="font-black">AI</span>COACH*
-    </span>
+    </Link>
   );
 };
 
