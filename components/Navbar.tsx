@@ -17,7 +17,7 @@ const Navbar = async (props: Props) => {
     >
       <div className="flex space-x-5 items-center">
         <Logo />
-        <Navigate user={user} />
+        <Navigate />
       </div>
 
       <div className={`hidden lg:space-x-1 lg:flex lg:items-center`}>
