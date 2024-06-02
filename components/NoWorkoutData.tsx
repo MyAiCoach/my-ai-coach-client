@@ -1,6 +1,7 @@
 import { Angry, Dumbbell } from "lucide-react";
 import React from "react";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 type Props = {};
 
@@ -13,7 +14,9 @@ const NoWorkoutData = (props: Props) => {
         <h1 className="font-bold text-5xl">Let's create a</h1>
         <h1 className="font-bold text-5xl uppercase"> Workout Program</h1>
       </div>
-      <Button variant={"default"}>Let's Create</Button>
+      <Link href={"/createWorkout"}>
+        <Button variant={"default"}>Let's Create</Button>
+      </Link>
     </section>
   );
 };
