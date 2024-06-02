@@ -1,5 +1,5 @@
 import { LoginToken } from "@/app/contracts/token/LoginToken";
-import { jwtVerify } from "jose";
+import { JWTPayload, jwtVerify } from "jose";
 
 const getJwtSecretKey = () => {
   const secretKey = process.env.NEXT_PUBLIC_JWT_SECRET;
@@ -9,10 +9,12 @@ const getJwtSecretKey = () => {
   }
   return new TextEncoder().encode(secretKey);
 };
-export async function verifyJwtToken(token: string) {
+
+export async function verifyJwtToken(
+  token: string
+): Promise<JWTPayload | null> {
   try {
     const { payload } = await jwtVerify(token, getJwtSecretKey());
-
     return payload;
   } catch (error) {
     return null;

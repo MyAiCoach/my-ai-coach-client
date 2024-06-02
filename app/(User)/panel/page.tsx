@@ -1,16 +1,18 @@
-"use client";
+import Navbar from "@/components/Navbar";
 import WorkoutProgram from "@/components/WorkoutProgram";
 import { useAuth } from "@/hooks/Auth";
 
-export default function Panel() {
-  const user = useAuth();
+export default async function Panel() {
+  const user = await useAuth.fromServer();
+  const userID: any =
+    user?.[
+      "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
+    ];
 
-  console.log(user);
   return (
-    <main>
-      <h1>Home</h1>
-      <p>Welcome to your new project!</p>
-      <WorkoutProgram userGuid={"123456789"} />
+    <main className="lg:py-24 lg:px-72 px-9 py-24">
+      <h1 className="text-4xl font-bold">Dashboard</h1>
+      <WorkoutProgram userGuid={userID} />
     </main>
   );
 }

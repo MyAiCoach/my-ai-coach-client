@@ -9,6 +9,7 @@ const fontSans = FontSans({
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
+import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
   title: "My Ai Coach",
@@ -35,6 +36,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Navbar/>
           {children}
           <Toaster />
         </ThemeProvider>

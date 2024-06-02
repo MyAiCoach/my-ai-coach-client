@@ -2,13 +2,16 @@
 import ProgramViewDto from "@/app/contracts/WorkoutProgram/ProgramViewDto";
 import WorkoutProgramService from "@/app/services/models/WorkoutProgram/WorkoutProgramService";
 import React, { useEffect, useState } from "react";
+import NoWorkoutData from "./NoWorkoutData";
+import { SkeletonCard } from "./SkeletonCard";
 
 interface WorkoutProgramProps {
-  userGuid: string;
+  userGuid?: string | undefined;
 }
 
 const WorkoutProgram: React.FC<WorkoutProgramProps> = ({ userGuid }) => {
   const [workoutProgram, setWorkoutProgram] = useState<ProgramViewDto[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const workoutProgramService = new WorkoutProgramService();
 
@@ -23,6 +26,8 @@ const WorkoutProgram: React.FC<WorkoutProgramProps> = ({ userGuid }) => {
         setWorkoutProgram(data);
       } catch (error) {
         console.error("Error fetching data:", error); // Hata durumunda logla
+      } finally {
+        setLoading(false); // Veri çekme işlemi tamamlandığında loading'i false yap
       }
     };
 
@@ -30,44 +35,17 @@ const WorkoutProgram: React.FC<WorkoutProgramProps> = ({ userGuid }) => {
   }, []); // useEffect hook'unun yalnızca bir kere çalışmasını sağlamak için boş bir array kullanıyoruz
 
   return (
-    <section>
-      <h1>Workout Program</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Day</th>
-            <th>Exercises</th>
-            <th>Sets & Reps</th>
-          </tr>
-        </thead>
-        <tbody>
-          {workoutProgram.map((program, index) => (
-            <tr key={index}>
-              <td>{program.Day}</td>
-              <td>
-                <ul>
-                  {program.Exercises.map((exercise, index) => (
-                    <li key={index}>
-                      <strong>{exercise.Name}</strong> - {exercise.Description}{" "}
-                      ({exercise.TargetArea})
-                    </li>
-                  ))}
-                </ul>
-              </td>
-              <td>
-                <ul>
-                  {program.SetReps.map((setRep, index) => (
-                    <li key={index}>
-                      Set {index + 1}: {setRep.Set} sets of {setRep.Rep}
-                    </li>
-                  ))}
-                </ul>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </section>
+    <>
+      <section className="p-10">
+        {loading ? (
+          <SkeletonCard />
+        ) : workoutProgram.length === 0 ? (
+          <NoWorkoutData />
+        ) : (
+          <p>this is workout program !</p>
+        )}
+      </section>
+    </>
   );
 };
 

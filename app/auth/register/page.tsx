@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import AuthService from "@/app/services/models/Authantication/AuthService";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
-import { BackgroundBeams } from "@/components/ui/background-beams";
 
 export default function page() {
   const [form, setForm] = useState({
