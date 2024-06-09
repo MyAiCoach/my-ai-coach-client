@@ -1,51 +1,52 @@
 "use client";
+import React, { useEffect, useState } from "react";
 import ProgramViewDto from "@/app/contracts/WorkoutProgram/ProgramViewDto";
 import WorkoutProgramService from "@/app/services/models/WorkoutProgram/WorkoutProgramService";
-import React, { useEffect, useState } from "react";
 import NoWorkoutData from "./NoWorkoutData";
 import { SkeletonCard } from "./SkeletonCard";
+import WorkoutTable from "./WorkoutTable";
 
 interface WorkoutProgramProps {
   userGuid?: string | undefined;
 }
 
 const WorkoutProgram: React.FC<WorkoutProgramProps> = ({ userGuid }) => {
-  const [workoutProgram, setWorkoutProgram] = useState<ProgramViewDto[]>([]);
+  const [workoutProgram, setWorkoutProgram] = useState<ProgramViewDto[] | null>(
+    null
+  );
   const [loading, setLoading] = useState<boolean>(true);
-
   const workoutProgramService = new WorkoutProgramService();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchWorkoutProgram = async () => {
       try {
-        const data: ProgramViewDto[] =
-          await workoutProgramService.getWorkoutProgramsAsync(
-            userGuid as string
-          );
-        console.log("Data:", data); // Gelen veriyi kontrol etmek için log
+        const data = await workoutProgramService.getWorkoutProgramsAsync(
+          userGuid as string
+        );
         setWorkoutProgram(data);
       } catch (error) {
-        console.error("Error fetching data:", error); // Hata durumunda logla
+        console.error(error);
       } finally {
-        setLoading(false); // Veri çekme işlemi tamamlandığında loading'i false yap
+        setLoading(false);
       }
     };
 
-    fetchData();
-  }, []); // useEffect hook'unun yalnızca bir kere çalışmasını sağlamak için boş bir array kullanıyoruz
+    fetchWorkoutProgram();
+  }, [userGuid]);
+  //data fetching...
+
+  console.log("WorkoutProgram ?", workoutProgram);
 
   return (
-    <>
-      <section className="p-10">
-        {loading ? (
-          <SkeletonCard />
-        ) : workoutProgram.length === 0 ? (
-          <NoWorkoutData />
-        ) : (
-          <p>this is workout program !</p>
-        )}
-      </section>
-    </>
+    <section className="p-10">
+      {loading ? (
+        <SkeletonCard />
+      ) : workoutProgram?.length === 0 ? (
+        <NoWorkoutData />
+      ) : (
+        <WorkoutTable workoutProgram={workoutProgram} />
+      )}
+    </section>
   );
 };
 

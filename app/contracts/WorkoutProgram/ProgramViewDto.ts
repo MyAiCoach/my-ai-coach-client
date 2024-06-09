@@ -3,7 +3,7 @@ import ExerciseViewDto from "../Exercise/ExerciseViewDto";
 import SetRepViewDto from "../SetRep/SetRepViewDto";
 
 export default interface ProgramViewDto {
-  Day: Days;
-  Exercises: ExerciseViewDto[];
-  SetReps: SetRepViewDto[];
+  day: number;
+  exercises: ExerciseViewDto[];
+  setReps: SetRepViewDto[];
 }

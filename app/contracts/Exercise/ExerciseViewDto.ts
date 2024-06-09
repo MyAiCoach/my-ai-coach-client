@@ -1,5 +1,5 @@
 export default interface ExerciseViewDto {
-  Name: string;
-  Description: string;
-  TargetArea: string;
+  name: string;
+  description: string;
+  targetArea: string;
 }

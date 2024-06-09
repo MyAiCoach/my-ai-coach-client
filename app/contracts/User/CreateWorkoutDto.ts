@@ -1,25 +1,42 @@
+export interface CreateWorkoutDtoPlus {
+  age: number;
+  weight: number;
+  height: number;
+  workoutLevel: workoutLevel;
+  workoutType: workoutType;
+  workoutDuration: number;
+  workoutDayCount: number;
+  modelSelection: ModelSelection;
+}
+
 export interface CreateWorkoutDto {
   age: number;
   weight: number;
   height: number;
   workoutLevel: workoutLevel;
   workoutType: workoutType;
-  workoutTime: number;
+  workoutDuration: number;
   workoutDayCount: number;
 }
 
 export enum workoutType {
-  LoseWeigh = "Lose Weight",
-  GainWeight = "Gain Weight",
-  ImproveMuscle = "Improve Muscle",
-  ImproveCondition = "Improve Condition",
-  ImproveFlexibility = "Improve Flexibility",
+  LoseWeight,
+  GainMuscle,
+  StayFit,
+  GainStrength,
+  GainEndurance,
+  GainFlexibility,
 }
 
 export enum workoutLevel {
-  Beginner = "Beginner",
-  Intermediate = "Intermediate",
-  Advanced = "Advanced",
-  Professional = "Professional",
-  Expert = "Expert",
+  Beginner,
+  Intermediate,
+  Advanced,
+  Professional,
+  Expert,
+}
+
+export enum ModelSelection {
+  GeminiAIService = "GeminiAIService",
+  OpenAIService = "OpenAIService",
 }

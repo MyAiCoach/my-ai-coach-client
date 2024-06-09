@@ -1,16 +1,21 @@
 import ProgramViewDto from "@/app/contracts/WorkoutProgram/ProgramViewDto";
 import BaseService from "../BaseService";
+import { RequestParameters } from "../../HttpClientService";
 
 export default class WorkoutProgramService extends BaseService {
-  async getWorkoutProgramsAsync<ProgramViewDto>(
-    id: string
-  ): Promise<ProgramViewDto> {
-    const promiseData: ProgramViewDto =
-      await this.httpClientServices.getByIdAsyncWithToken({
-        controller: "userexercise",
-        queryString: `?id=${id}`,
-      });
+  async getWorkoutProgramsAsync(id: string): Promise<ProgramViewDto[]> {
+    const requestParameters: Partial<RequestParameters> = {
+      controller: "UserExercise",
+      queryString: `?id=${id}`,
+    };
 
-    return promiseData;
+    const data = await this.httpClientServices.getByIdAsyncWithToken<
+      ProgramViewDto[]
+    >(requestParameters);
+
+    console.log("WorkoutProgramService", data);
+    console.log(typeof data);
+
+    return data;
   }
 }

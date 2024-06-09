@@ -15,6 +15,14 @@ import {
 
 const Step2 = () => {
   const { register, setValue } = useFormContext();
+
+  const workoutTypeOptions = Object.keys(workoutType).filter((key) =>
+    isNaN(Number(key))
+  );
+  const workoutLevelOptions = Object.keys(workoutLevel).filter((key) =>
+    isNaN(Number(key))
+  );
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -100 }}
@@ -30,28 +38,32 @@ const Step2 = () => {
         </p>
       </div>
       <Label>Workout Type:</Label>
-      <Select onValueChange={(value) => setValue("workoutType", value)}>
+      <Select
+        onValueChange={(value) => setValue("workoutType", workoutType[value])}
+      >
         <SelectTrigger>
-          <SelectValue placeholder="Selec a level" />
+          <SelectValue placeholder="Select a type" />
         </SelectTrigger>
         <SelectContent>
-          {Object.entries(workoutType).map(([key, value]) => (
-            <SelectItem key={key} value={value.toString()}>
-              {value}
+          {workoutTypeOptions.map((key) => (
+            <SelectItem key={key} value={key}>
+              {key}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
 
       <Label>Workout Level: </Label>
-      <Select onValueChange={(value) => setValue("workoutLevel", value)}>
+      <Select
+        onValueChange={(value) => setValue("workoutLevel", workoutLevel[value])}
+      >
         <SelectTrigger>
-          <SelectValue placeholder="Selec a level" />
+          <SelectValue placeholder="Select a level" />
         </SelectTrigger>
         <SelectContent>
-          {Object.entries(workoutLevel).map(([key, value]) => (
-            <SelectItem key={key} value={value.toString()}>
-              {value}
+          {workoutLevelOptions.map((key) => (
+            <SelectItem key={key} value={key}>
+              {key}
             </SelectItem>
           ))}
         </SelectContent>

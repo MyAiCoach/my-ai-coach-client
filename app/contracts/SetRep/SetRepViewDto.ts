@@ -1,4 +1,4 @@
 export default interface SetRepViewDto {
-  Set: string;
-  Rep: string;
+  set: string;
+  rep: string;
 }

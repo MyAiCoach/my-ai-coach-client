@@ -1,10 +1,18 @@
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { motion } from "framer-motion";
 import { useFormContext } from "react-hook-form";
+import { ModelSelection } from "@/app/contracts/User/CreateWorkoutDto";
 
 const Step3 = () => {
-  const { register } = useFormContext();
+  const { register, setValue } = useFormContext();
 
   return (
     <motion.div
@@ -28,6 +36,20 @@ const Step3 = () => {
         type="number"
         {...register("workoutDayCount", { required: true })}
       />
+
+      <Label>Choose Ai Service: </Label>
+      <Select onValueChange={(value) => setValue("modelSelection", value)}>
+        <SelectTrigger>
+          <SelectValue placeholder="Choose ai" />
+        </SelectTrigger>
+        <SelectContent>
+          {Object.entries(ModelSelection).map(([key, value]) => (
+            <SelectItem key={key} value={value.toString()}>
+              {value}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </motion.div>
   );
 };

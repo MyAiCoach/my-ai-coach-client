@@ -34,6 +34,10 @@ export class HttpClientService {
     const token = Cookies.get("token")?.valueOf();
     const headers = { Authorization: `Bearer ${token}` };
 
+    if (requestParameters.headers != null) {
+      Object.assign(headers, requestParameters.headers);
+    }
+
     let url: string = "";
     if (requestParameters.fullEndPoint) {
       url = requestParameters.fullEndPoint;
