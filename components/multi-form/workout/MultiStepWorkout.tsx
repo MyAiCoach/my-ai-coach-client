@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import AiService from "@/app/services/models/Ai/AiService";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 
 const MultiStepForm = () => {
   const aiService = new AiService();
@@ -53,10 +54,30 @@ const MultiStepForm = () => {
     }
   };
 
+  const loadingStates = [
+    {
+      text: "Asking for workout program...",
+    },
+    {
+      text: "AI is thinking about your workout...",
+    },
+    {
+      text: "AI is dreaming about your workout...",
+    },
+    {
+      text: "AI is calculating your workout...",
+    },
+    {
+      text: "AI is going to workout using your plan...",
+    },
+    {
+      text: "AI is testing...",
+    },
+  ];
+
   return (
     <>
       <div className="container mx-auto p-4">
-        <h1>Hello! Lets create a Workout Plan</h1>
         <FormProvider {...methods}>
           <form
             onSubmit={methods.handleSubmit(onSubmit)}
@@ -86,7 +107,13 @@ const MultiStepForm = () => {
             </div>
           </form>
         </FormProvider>
-        {loading && <div>Loading...</div>}
+        {loading && (
+          <MultiStepLoader
+            loadingStates={loadingStates}
+            loading={loading}
+            duration={5000}
+          />
+        )}
       </div>
     </>
   );

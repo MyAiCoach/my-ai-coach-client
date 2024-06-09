@@ -9,6 +9,7 @@ import { AuthInput } from "@/components/ui/auth-input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { toast } from "@/components/ui/use-toast";
 
 type Props = {};
 
@@ -29,7 +30,11 @@ const page = (props: Props) => {
       const next = searchParams.get("next");
       router.push(next || "/panel");
     } catch (error) {
-      // todo : notify user
+      toast({
+        title: "Error",
+        description: "Invalid username or password",
+      });
+      setForm({ userName: "", password: "" });
       router.push("/auth/login");
     }
   };

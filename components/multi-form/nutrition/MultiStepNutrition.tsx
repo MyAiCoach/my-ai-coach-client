@@ -19,10 +19,10 @@ import {
   CreateNutritionDto,
   CreateNutritionDtoPlus,
 } from "@/app/contracts/User/CreateNutritionDto";
+import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 
 const MultiStepForm = () => {
   const aiService = new AiService();
-
   const [step, setStep] = useState(1);
   const methods = useForm<CreateNutritionDtoPlus>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -45,7 +45,6 @@ const MultiStepForm = () => {
 
     try {
       const response = await aiService.getNutritionProgram(questionData, model);
-      console.log(response);
       router.push("/panel");
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -57,6 +56,27 @@ const MultiStepForm = () => {
       setLoading(false);
     }
   };
+
+  const loadingStates = [
+    {
+      text: "Asking for diet program...",
+    },
+    {
+      text: "AI is thinking about your diet...",
+    },
+    {
+      text: "AI is dreaming about your diet...",
+    },
+    {
+      text: "AI is calculating your diet...",
+    },
+    {
+      text: "AI is cooking your menus...",
+    },
+    {
+      text: "AI is testing...",
+    },
+  ];
 
   return (
     <>
@@ -90,7 +110,13 @@ const MultiStepForm = () => {
             </div>
           </form>
         </FormProvider>
-        {loading && <div>Loading...</div>}
+        {loading && (
+          <MultiStepLoader
+            loadingStates={loadingStates}
+            loading={loading}
+            duration={5000}
+          />
+        )}
       </div>
     </>
   );

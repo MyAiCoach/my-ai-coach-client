@@ -19,7 +19,7 @@ const Navigate = (props: Props) => {
               Panel
             </Button>
           </Link>
-          <Link href={"/createWorkout"}>
+          <Link href={"/workout-program"}>
             <Button
               variant={"link"}
               className="text-gray-400 hover:text-primary"
@@ -27,7 +27,7 @@ const Navigate = (props: Props) => {
               Workout
             </Button>
           </Link>
-          <Link href={"/createDiet"}>
+          <Link href={"/diet-program"}>
             <Button
               variant={"link"}
               className="text-gray-400 hover:text-primary"

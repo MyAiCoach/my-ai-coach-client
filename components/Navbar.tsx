@@ -46,7 +46,7 @@ const Navbar = async (props: Props) => {
       </div>
       <div className="flex space-x-2 items-center lg:hidden">
         <ModeToggle />
-        <NavigationMobile />
+        <NavigationMobile user={user} />
       </div>
     </nav>
   );
