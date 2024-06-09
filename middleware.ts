@@ -36,5 +36,5 @@ export async function middleware(request: any) {
 }
 
 export const config = {
-  matcher: ["/auth/:path*", "/panel", "/createWorkout"],
+  matcher: ["/auth/:path*", "/panel", "/createWorkout", "/createDiet"],
 };

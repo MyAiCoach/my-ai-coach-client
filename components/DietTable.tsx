@@ -10,55 +10,58 @@ import {
   TableRow,
 } from "./ui/table";
 import ProgramViewDto from "@/app/contracts/WorkoutProgram/ProgramViewDto";
+import DietViewDto from "@/app/contracts/DietProgram/DietViewDto";
 
 type Props = {
-  workoutProgram: ProgramViewDto[] | null;
+  dietProgram: DietViewDto[] | null;
 };
 
-const WorkoutTable = ({ workoutProgram }: Props) => {
+const DietTable = ({ dietProgram }: Props) => {
   return (
     <Tabs defaultValue="day-1" className="w-full flex flex-col items-center">
       <TabsList className="my-5">
-        {workoutProgram?.map((dayData, index) => (
+        {dietProgram?.map((dayData, index) => (
           <TabsTrigger
-            key={`trigger-${dayData.day}-${index}`}
-            value={`day-${dayData.day}`}
+            key={`trigger-${dayData.days}-${index}`}
+            value={`day-${dayData.days}`}
             className="px-6"
           >
-            {getDayName(dayData.day)}
+            {getDayName(dayData.days)}
           </TabsTrigger>
         ))}
       </TabsList>
-      {workoutProgram?.map((dayData, index) => (
+      {dietProgram?.map((dayData, index) => (
         <TabsContent
-          key={`content-${dayData.day}-${index}`}
-          value={`day-${dayData.day}`}
+          key={`content-${dayData.days}-${index}`}
+          value={`day-${dayData.days}`}
         >
           <Table className="w-[1250px]">
-            <TableCaption>Workout Plan</TableCaption>
+            <TableCaption>Diet Plan</TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead>Name</TableHead>
+                <TableHead>Calory</TableHead>
+                <TableHead>Protein</TableHead>
+                <TableHead>Carbonhydate</TableHead>
                 <TableHead>Description</TableHead>
-                <TableHead>Target Area</TableHead>
-                <TableHead>Set x Rep</TableHead>
+                <TableHead>Amount-Type</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {dayData.exercises?.map((exercise, exerciseIndex) => {
-                const setRep = dayData.setReps[exerciseIndex];
+              {dayData.foods?.map((food, foodIndex) => {
+                const gram = dayData.grams[foodIndex];
                 return (
                   <TableRow
-                    key={`${exercise.name}-${exerciseIndex}`}
+                    key={`${food.name}-${foodIndex}`}
                     className="cursor-pointer"
                   >
-                    <TableCell className="font-medium">
-                      {exercise.name}
-                    </TableCell>
-                    <TableCell>{exercise.description}</TableCell>
-                    <TableCell>{exercise.targetArea}</TableCell>
+                    <TableCell className="font-medium">{food.name}</TableCell>
+                    <TableCell>{food.calory}</TableCell>
+                    <TableCell>{food.protein}</TableCell>
+                    <TableCell>{food.carbonhydrate}</TableCell>
+                    <TableCell>{food.description}</TableCell>
                     <TableCell>
-                      {setRep ? `${setRep.set} x ${setRep.rep}` : "N/A"}
+                      {gram ? `${gram.amount} x ${gram.type}` : "N/A"}
                     </TableCell>
                   </TableRow>
                 );
@@ -92,4 +95,4 @@ const getDayName = (dayNumber: number) => {
   }
 };
 
-export default WorkoutTable;
+export default DietTable;

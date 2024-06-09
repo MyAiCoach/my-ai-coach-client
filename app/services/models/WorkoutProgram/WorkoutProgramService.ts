@@ -14,7 +14,6 @@ export default class WorkoutProgramService extends BaseService {
     >(requestParameters);
 
     console.log("WorkoutProgramService", data);
-    console.log(typeof data);
 
     return data;
   }

@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm, FormProvider, set } from "react-hook-form";
 import { AnimatePresence } from "framer-motion";
 import Step1 from "./Step1";
@@ -15,31 +15,36 @@ import { Button } from "@/components/ui/button";
 import AiService from "@/app/services/models/Ai/AiService";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import {
+  CreateNutritionDto,
+  CreateNutritionDtoPlus,
+} from "@/app/contracts/User/CreateNutritionDto";
 
 const MultiStepForm = () => {
   const aiService = new AiService();
 
   const [step, setStep] = useState(1);
-  const methods = useForm<CreateWorkoutDtoPlus>();
+  const methods = useForm<CreateNutritionDtoPlus>();
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  const onSubmit = async (data: CreateWorkoutDtoPlus) => {
+  const onSubmit = async (data: CreateNutritionDtoPlus) => {
     setLoading(true);
 
-    const questionData: CreateWorkoutDto = {
+    const questionData: CreateNutritionDto = {
       age: data.age,
       height: data.height,
       weight: data.weight,
-      workoutType: data.workoutType,
-      workoutLevel: data.workoutLevel,
-      workoutDayCount: data.workoutDayCount,
-      workoutDuration: data.workoutDuration,
+      glutenInTolerance: data.glutenInTolerance ?? false,
+      lactoseInTolerance: data.lactoseInTolerance ?? false,
+      nutritionDuration: data.nutritionDuration,
+      nutritionGoal: data.nutritionGoal,
+      vegan: data.vegan ?? false,
     };
     const model: ModelSelection = data.modelSelection;
 
     try {
-      const response = await aiService.getWorkoutProgram(questionData, model);
+      const response = await aiService.getNutritionProgram(questionData, model);
       console.log(response);
       router.push("/panel");
     } catch (error) {
@@ -56,7 +61,6 @@ const MultiStepForm = () => {
   return (
     <>
       <div className="container mx-auto p-4">
-        <h1>Hello! Lets create a Workout Plan</h1>
         <FormProvider {...methods}>
           <form
             onSubmit={methods.handleSubmit(onSubmit)}

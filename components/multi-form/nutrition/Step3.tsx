@@ -10,6 +10,7 @@ import { Label } from "@radix-ui/react-dropdown-menu";
 import { motion } from "framer-motion";
 import { useFormContext } from "react-hook-form";
 import { ModelSelection } from "@/app/contracts/User/CreateWorkoutDto";
+import { Switch } from "@/components/ui/switch";
 
 const Step3 = () => {
   const { register, setValue } = useFormContext();
@@ -25,17 +26,22 @@ const Step3 = () => {
       <div>
         <h2 className="text-xl text-primary">Last One</h2>
         <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-          Enter the workout time and day count.
+          Enter the any tolearance.
         </p>
       </div>
-      <Label>Workout Time (Days): </Label>
-      <Input type="number" {...register("workoutTime", { required: true })} />
 
-      <Label>Workout Day Count:</Label>
-      <Input
-        type="number"
-        {...register("workoutDayCount", { required: true })}
+      <Label>Lactose In Tolerance : </Label>
+      <Switch
+        onCheckedChange={(value) => setValue("lactoseInTolerance", value)}
       />
+
+      <Label>Gluten In Tolerance : </Label>
+      <Switch
+        onCheckedChange={(value) => setValue("glutenInTolerance", value)}
+      />
+
+      <Label>Do you prefere Vegan : </Label>
+      <Switch onCheckedChange={(value) => setValue("vegan", value)} />
 
       <Label>Choose Ai Service: </Label>
       <Select onValueChange={(value) => setValue("modelSelection", value)}>
