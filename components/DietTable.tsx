@@ -42,7 +42,7 @@ const DietTable = ({ dietProgram }: Props) => {
                 <TableHead>Name</TableHead>
                 <TableHead>Calory</TableHead>
                 <TableHead>Protein</TableHead>
-                <TableHead>Carbonhydate</TableHead>
+                <TableHead>Carbohydrate</TableHead>
                 <TableHead>Description</TableHead>
                 <TableHead>Amount-Type</TableHead>
               </TableRow>
@@ -53,14 +53,16 @@ const DietTable = ({ dietProgram }: Props) => {
                 return (
                   <TableRow
                     key={`${food.name}-${foodIndex}`}
-                    className="cursor-pointer"
+                    className="cursor-pointer py-5"
                   >
-                    <TableCell className="font-medium">{food.name}</TableCell>
-                    <TableCell>{food.calory}</TableCell>
-                    <TableCell>{food.protein}</TableCell>
-                    <TableCell>{food.carbonhydrate}</TableCell>
-                    <TableCell>{food.description}</TableCell>
-                    <TableCell>
+                    <TableCell className="font-medium py-5">
+                      {food.name}
+                    </TableCell>
+                    <TableCell className="py-5">{food.calory}</TableCell>
+                    <TableCell className="py-5">{food.protein}</TableCell>
+                    <TableCell className="py-5">{food.carbonhydrate}</TableCell>
+                    <TableCell className="py-5">{food.description}</TableCell>
+                    <TableCell className="py-5">
                       {gram ? `${gram.amount} x ${gram.type}` : "N/A"}
                     </TableCell>
                   </TableRow>

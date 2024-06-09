@@ -13,12 +13,13 @@ import ProgramViewDto from "@/app/contracts/WorkoutProgram/ProgramViewDto";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { ScrollArea } from "./ui/scroll-area";
+import DietViewDto from "@/app/contracts/DietProgram/DietViewDto";
 
 type Props = {
-  workoutProgram: ProgramViewDto | undefined;
+  dietProgramDay: DietViewDto | undefined;
 };
 
-const WorkoutTablePerDay = ({ workoutProgram }: Props) => {
+const DietTablePerDay = ({ dietProgramDay }: Props) => {
   return (
     <>
       <ScrollArea>
@@ -28,29 +29,30 @@ const WorkoutTablePerDay = ({ workoutProgram }: Props) => {
         >
           <Table>
             <TableCaption>
-              {getDayName(workoutProgram?.day)} Workout Plan
+              {getDayName(dietProgramDay?.days)} Diet Plan
             </TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead>Name</TableHead>
-                <TableHead>Target Area</TableHead>
-                <TableHead>Set x Rep</TableHead>
+                <TableHead>Calory</TableHead>
+                <TableHead>Protein</TableHead>
+                <TableHead>Amount-Type</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {workoutProgram?.exercises?.map((exercise, exerciseIndex) => {
-                const setRep = workoutProgram.setReps[exerciseIndex];
+              {dietProgramDay?.foods?.map((food, foodIndex) => {
+                const gram = dietProgramDay.grams[foodIndex];
                 return (
                   <TableRow
-                    key={`${exercise.name}-${exerciseIndex}`}
+                    key={`${food.name}-${foodIndex}`}
                     className="cursor-pointer"
                   >
-                    <TableCell className="font-medium py-5">
-                      {exercise.name}
-                    </TableCell>
-                    <TableCell>{exercise.targetArea}</TableCell>
+                    <TableCell className="font-medium">{food.name}</TableCell>
+                    <TableCell>{food.calory}</TableCell>
+                    <TableCell>{food.protein}</TableCell>
+                    <TableCell>{food.carbonhydrate}</TableCell>
                     <TableCell>
-                      {setRep ? `${setRep.set}x${setRep.rep}` : "N/A"}
+                      {gram ? `${gram.amount} x ${gram.type}` : "N/A"}
                     </TableCell>
                   </TableRow>
                 );
@@ -89,4 +91,4 @@ const getDayName = (dayNumber: number | undefined) => {
   }
 };
 
-export default WorkoutTablePerDay;
+export default DietTablePerDay;

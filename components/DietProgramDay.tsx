@@ -1,31 +1,29 @@
 "use client";
-import ProgramViewDto from "@/app/contracts/WorkoutProgram/ProgramViewDto";
-import WorkoutProgramService from "@/app/services/models/WorkoutProgram/WorkoutProgramService";
 import React, { useEffect, useState } from "react";
 import getCurrentDay from "@/lib/getCurrentDay";
-import { SkeletonCard } from "./SkeletonCard";
 import NoWorkoutData from "./NoWorkoutData";
 import WorkoutTablePerDay from "./WorkoutTablePerDay";
 import { Skeleton } from "./ui/skeleton";
+import DietViewDto from "@/app/contracts/DietProgram/DietViewDto";
+import DietProgramService from "@/app/services/models/DietProgram/DietProgramService";
+import DietTablePerDay from "./DietTablePerDay";
 
-type WorkoutByDayProps = {
+type DietProgramDayProps = {
   userGuid?: string | undefined;
 };
 
-const WorkoutProgramDay: React.FC<WorkoutByDayProps> = ({ userGuid }) => {
-  const [workoutProgram, setWorkoutProgram] = useState<ProgramViewDto[] | null>(
-    null
-  );
+const DietProgramDay: React.FC<DietProgramDayProps> = ({ userGuid }) => {
+  const [dietProgram, setDietProgram] = useState<DietViewDto[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const workoutProgramService = new WorkoutProgramService();
+  const dietProgramService = new DietProgramService();
 
   useEffect(() => {
     const fetchWorkoutProgram = async () => {
       try {
-        const data = await workoutProgramService.getWorkoutProgramsAsync(
+        const data = await dietProgramService.getDietProgramsAsync(
           userGuid as string
         );
-        setWorkoutProgram(data);
+        setDietProgram(data);
       } catch (error) {
         console.error(error);
       } finally {
@@ -37,21 +35,19 @@ const WorkoutProgramDay: React.FC<WorkoutByDayProps> = ({ userGuid }) => {
   }, [userGuid]);
   //data fetching...
 
-  console.log("WorkoutProgram ?", workoutProgram);
-
   return (
     <>
       {loading ? (
         <Skeleton className="w-full h-full rounded-xl" />
-      ) : workoutProgram?.length === 0 ? (
+      ) : dietProgram?.length === 0 ? (
         <NoWorkoutData />
       ) : (
-        <WorkoutTablePerDay
-          workoutProgram={workoutProgram?.find((p) => p.day == getCurrentDay())}
+        <DietTablePerDay
+          dietProgramDay={dietProgram?.find((p) => p.days == getCurrentDay())}
         />
       )}
     </>
   );
 };
 
-export default WorkoutProgramDay;
+export default DietProgramDay;

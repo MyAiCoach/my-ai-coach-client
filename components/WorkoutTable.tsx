@@ -50,14 +50,18 @@ const WorkoutTable = ({ workoutProgram }: Props) => {
                 return (
                   <TableRow
                     key={`${exercise.name}-${exerciseIndex}`}
-                    className="cursor-pointer"
+                    className="cursor-pointer "
                   >
-                    <TableCell className="font-medium">
+                    <TableCell className="font-medium py-5">
                       {exercise.name}
                     </TableCell>
-                    <TableCell>{exercise.description}</TableCell>
-                    <TableCell>{exercise.targetArea}</TableCell>
-                    <TableCell>
+                    <TableCell className="py-5">
+                      {exercise.description}
+                    </TableCell>
+                    <TableCell className="py-5">
+                      {exercise.targetArea}
+                    </TableCell>
+                    <TableCell className="py-5">
                       {setRep ? `${setRep.set} x ${setRep.rep}` : "N/A"}
                     </TableCell>
                   </TableRow>

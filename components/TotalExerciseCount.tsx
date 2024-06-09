@@ -1,18 +1,17 @@
 "use client";
+import React, { useEffect, useState } from "react";
 import ProgramViewDto from "@/app/contracts/WorkoutProgram/ProgramViewDto";
 import WorkoutProgramService from "@/app/services/models/WorkoutProgram/WorkoutProgramService";
-import React, { useEffect, useState } from "react";
-import getCurrentDay from "@/lib/getCurrentDay";
-import { SkeletonCard } from "./SkeletonCard";
 import NoWorkoutData from "./NoWorkoutData";
-import WorkoutTablePerDay from "./WorkoutTablePerDay";
+import { SkeletonCard } from "./SkeletonCard";
+import WorkoutTable from "./WorkoutTable";
 import { Skeleton } from "./ui/skeleton";
 
-type WorkoutByDayProps = {
+interface TotalExerciseCount {
   userGuid?: string | undefined;
-};
+}
 
-const WorkoutProgramDay: React.FC<WorkoutByDayProps> = ({ userGuid }) => {
+const TotalExerciseCount: React.FC<TotalExerciseCount> = ({ userGuid }) => {
   const [workoutProgram, setWorkoutProgram] = useState<ProgramViewDto[] | null>(
     null
   );
@@ -37,21 +36,26 @@ const WorkoutProgramDay: React.FC<WorkoutByDayProps> = ({ userGuid }) => {
   }, [userGuid]);
   //data fetching...
 
-  console.log("WorkoutProgram ?", workoutProgram);
+  const totalExercisesCount =
+    workoutProgram?.reduce((total, program) => {
+      return total + program.exercises.length;
+    }, 0) || 0;
 
   return (
-    <>
+    <section className="p-10 w-full h-full">
       {loading ? (
         <Skeleton className="w-full h-full rounded-xl" />
-      ) : workoutProgram?.length === 0 ? (
-        <NoWorkoutData />
       ) : (
-        <WorkoutTablePerDay
-          workoutProgram={workoutProgram?.find((p) => p.day == getCurrentDay())}
-        />
+        // get total exercise count
+
+        <div className="flex flex-col items-center justify-center h-full w-full">
+          <p>Total</p>
+          <h1 className="text-8xl font-black pb-5">{totalExercisesCount}</h1>
+          <p className="text-primary text-lg">Exercise for this week</p>
+        </div>
       )}
-    </>
+    </section>
   );
 };
 
-export default WorkoutProgramDay;
+export default TotalExerciseCount;

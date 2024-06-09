@@ -1,4 +1,7 @@
+import MaximumCalory from "@/components/MaximumCalory";
 import DietProgram from "@/components/DietProgram";
+import DietProgramDay from "@/components/DietProgramDay";
+import TotalExerciseCount from "@/components/TotalExerciseCount";
 import { BackgroundBeams } from "@/components/ui/background-beams";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import { Button } from "@/components/ui/button";
@@ -20,16 +23,13 @@ export default async function Panel() {
       component: <WorkoutProgramDay userGuid={userID} />,
     },
     {
-      component: <h1>Exercise Count</h1>,
+      component: <TotalExerciseCount userGuid={userID} />,
     },
     {
-      component: <h1>Target area's</h1>,
+      component: <MaximumCalory userGuid={userID} />,
     },
     {
-      component: <h1>Todays calories</h1>,
-    },
-    {
-      component: <h1>Todays Diet</h1>,
+      component: <DietProgramDay userGuid={userID} />,
     },
   ];
 
@@ -41,13 +41,7 @@ export default async function Panel() {
           {items.map((item, i) => (
             <BentoGridItem
               component={item.component}
-              className={
-                i === 0
-                  ? "md:col-span-3 md:row-span-2"
-                  : "" || i === 4
-                  ? "md:col-span-3"
-                  : ""
-              }
+              className={i === 0 || i === 3 ? "md:col-span-3" : ""}
             />
           ))}
         </BentoGrid>
