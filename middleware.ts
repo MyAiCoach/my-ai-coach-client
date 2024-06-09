@@ -10,7 +10,7 @@ const isAuthPages = (url: string) =>
 export async function middleware(request: any) {
   const { url, nextUrl, cookies } = request;
   const { value: token } = cookies.get("token") ?? { value: null };
-
+  
   const hasVerifiedToken: LoginToken = token && (await verifyJwtToken(token));
 
   const isAuthPageRequested = isAuthPages(nextUrl.pathname);
@@ -36,5 +36,12 @@ export async function middleware(request: any) {
 }
 
 export const config = {
-  matcher: ["/auth/:path*", "/panel", "/createWorkout", "/createDiet"],
+  matcher: [
+    "/auth/:path*",
+    "/panel",
+    "/createWorkout",
+    "/createDiet",
+    "/workout-program",
+    "/diet-program",
+  ],
 };
